@@ -54,7 +54,7 @@ let setParams defaults =
                 ]
         }
 
-let restorePackages =
+let restorePackages () =
   !! "./**/packages.config"
         |> Seq.iter (RestorePackage (fun p ->
             { p with Sources = ["https://www.myget.org/F/6416d9912a7c4d46bc983870fb440d25/"]}))
@@ -62,7 +62,7 @@ let restorePackages =
 Target "RestorePackages" (fun _ ->
     Rename "./CorePlugin/packages.config" "./CorePlugin/packages.OgvPlayerCorePlugin.config"
 
-    restorePackages
+    restorePackages()
 
     Rename "./CorePlugin/packages.OgvPlayerCorePlugin.config" "./CorePlugin/packages.config"
 )
@@ -70,7 +70,7 @@ Target "RestorePackages" (fun _ ->
 Target "RestorePackagesAndroid" (fun _ ->
     Rename "./CorePlugin/packages.config" "./CorePlugin/packages.OgvPlayerCorePlugin.Android.config"
 
-    restorePackages
+    restorePackages()
 
     Rename "./CorePlugin/packages.OgvPlayerCorePlugin.Android.config" "./CorePlugin/packages.config"
 )
