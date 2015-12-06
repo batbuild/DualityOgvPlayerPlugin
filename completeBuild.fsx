@@ -4,8 +4,6 @@
 open Fake
 open Fake.AssemblyInfoFile
 
-RestorePackages()
-
 // Directories
 let buildDir  = @".\build\"
 let testDir   = @".\test\"
@@ -55,6 +53,27 @@ let setParams defaults =
                     "AllowUnsafeBlocks", "True"
                 ]
         }
+
+let restorePackages =
+  !! "./**/packages.config"
+        |> Seq.iter (RestorePackage (fun p ->
+            { p with Sources = ["https://www.myget.org/F/6416d9912a7c4d46bc983870fb440d25/"]}))
+
+Target "RestorePackages" (fun _ ->
+    Rename "./CorePlugin/packages.config" "./CorePlugin/packages.OgvPlayerCorePlugin.config"
+
+    restorePackages
+
+    Rename "./CorePlugin/packages.OgvPlayerCorePlugin.config" "./CorePlugin/packages.config"
+)
+
+Target "RestorePackagesAndroid" (fun _ ->
+    Rename "./CorePlugin/packages.config" "./CorePlugin/packages.OgvPlayerCorePlugin.Android.config"
+
+    restorePackages
+
+    Rename "./CorePlugin/packages.OgvPlayerCorePlugin.Android.config" "./CorePlugin/packages.config"
+)
 
 Target "CompileUnsafe" (fun _ ->              
     build setParams "./DualityOgvPlayer.sln"    
@@ -113,11 +132,13 @@ Target "AndroidPack" (fun _ ->
 // Dependencies
 "Clean"
   ==> "SetVersions"
+  ==> "RestorePackages"
   ==> "CompileUnsafe"
   ==> "CreateNuget"
   
 "Clean"
   ==> "SetVersions"
+  ==> "RestorePackagesAndroid"
   ==> "CompileUnsafeAndroid"
   ==> "AndroidPack"
   
