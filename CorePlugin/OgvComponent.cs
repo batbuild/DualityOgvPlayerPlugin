@@ -359,7 +359,7 @@ namespace OgvPlayer
 			var originalFileName = _fileName;
 			_fileName = Path.Combine(path, _fileName.Replace("\\", "/"));
 
-			using (var stream = ContentProvider.AndroidAssetManager.Open(originalFileName.Replace("\\", "/"), Access.Streaming))
+			using (var stream = ContentProvider.OpenAsset(originalFileName.Replace("\\", "/")))
 			using (var fileStream = new FileStream(_fileName, FileMode.Create))
 			{
 				stream.CopyTo(fileStream);
