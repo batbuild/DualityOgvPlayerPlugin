@@ -40,17 +40,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Duality.Android, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Duality.Android.0.1.61\lib\MonoAndroid\Duality.Android.dll</HintPath>
+      <HintPath>..\packages\Duality.Android.0.1.64\lib\MonoAndroid\Duality.Android.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FarseerDuality.Android, Version=0.1.13.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Farseer.Duality.Android.0.1.13\lib\MonoAndroid\FarseerDuality.Android.dll</HintPath>
+    <Reference Include="FarseerDuality.Android, Version=0.1.17.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Farseer.Duality.Android.0.1.17\lib\MonoAndroid\FarseerDuality.Android.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
-    <Reference Include="OpenTK.Android, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenTK.Duality.Android.0.1.55\lib\MonoAndroid\OpenTK.Android.dll</HintPath>
+    <Reference Include="OpenTK.Android, Version=0.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.Duality.Android.0.1.58\lib\MonoAndroid\OpenTK.Android.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
