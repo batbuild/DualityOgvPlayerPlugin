@@ -205,7 +205,7 @@ namespace OgvPlayer
 					return;
 
 				if(!CanRunOnThisArchitecture)
-					Log.Editor.WriteWarning("Can't play video on this architecture sorry ");
+					Log.Game.WriteWarning("Can't play video on this architecture sorry ");
 				WaitForAndDisposeAudioThread();
 
 				if (_theoraVideo == null || _theoraVideo.Disposed)
@@ -220,7 +220,6 @@ namespace OgvPlayer
 			catch(Exception exception)
 			{
 				Log.Game.WriteWarning("Video component failed with error {0}",Log.Exception(exception) );
-
 			}
 		}
 
@@ -350,22 +349,30 @@ namespace OgvPlayer
 #if __ANDROID__
 		private string ExtractVideoFromAPK(string fileName)
 		{
-			var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			var videoDir = Path.Combine(path, "video");
+			fileName = fileName.Replace("\\", "/");
+			var destinationPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), fileName);
 
-			if (Directory.Exists(videoDir) == false)
-				Directory.CreateDirectory(videoDir);
+			if (File.Exists(destinationPath))
+				return destinationPath;
 
-			var originalFileName = _fileName;
-			_fileName = Path.Combine(path, _fileName.Replace("\\", "/"));
+			if (Directory.Exists(Path.GetDirectoryName(destinationPath)) == false)
+				Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
 
-			using (var stream = ContentProvider.OpenAsset(originalFileName.Replace("\\", "/")))
-			using (var fileStream = new FileStream(_fileName, FileMode.Create))
+			try
 			{
-				stream.CopyTo(fileStream);
-				fileStream.Flush();
+				using (var stream = ContentProvider.OpenAsset(fileName))
+				using (var fileStream = new FileStream(destinationPath, FileMode.Create))
+				{
+					Log.Game.Write("Copying video file {0} to {1}", fileName, destinationPath);
+					stream.CopyTo(fileStream);
+					fileStream.Flush();
+				}
 			}
-			return _fileName;
+			catch (Exception e)
+			{
+				Log.Game.Write("Couldn't extract file {0} from the APK: {1}", fileName, e.Message);
+			}
+			return destinationPath;
 		}
 #endif
 	}
