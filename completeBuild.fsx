@@ -23,7 +23,7 @@ let info = {
     Name ="DualityOgvVideoPlayerPlugin"
     Title = "Duality OgvVideo player plugin"
     Description = "Ogv video player plugin for Duality Game engine"
-    Version =if isLocalBuild then "0.5-Local" else "0.5."+ buildVersion
+    Version =if isLocalBuild then "1.0-Local" else "1.0."+ buildVersion
     Authors =  ["Andrew O'Connor";"Andrea Magnorsky"]
 }
 // Targets
@@ -70,8 +70,8 @@ Target "RestorePackages" (fun _ ->
 Target "RestorePackagesAndroid" (fun _ ->
     Rename "./CorePlugin/packages.config" "./CorePlugin/packages.OgvPlayerCorePlugin.Android.config"
 
-    restorePackages()
-
+    restorePackages(
+)
     Rename "./CorePlugin/packages.OgvPlayerCorePlugin.Android.config" "./CorePlugin/packages.config"
 )
 
