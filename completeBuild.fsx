@@ -70,8 +70,7 @@ Target "RestorePackages" (fun _ ->
 Target "RestorePackagesAndroid" (fun _ ->
     Rename "./CorePlugin/packages.config" "./CorePlugin/packages.OgvPlayerCorePlugin.Android.config"
 
-    restorePackages(
-)
+    restorePackages()
     Rename "./CorePlugin/packages.OgvPlayerCorePlugin.Android.config" "./CorePlugin/packages.config"
 )
 
